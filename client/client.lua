@@ -1,3 +1,6 @@
+local RSGCore = exports['rsg-core']:GetCoreObject()
+
+
 -- Define key bindings
 local keys = {
     ['G'] = 0x760A9C6F,
@@ -97,8 +100,15 @@ end)
 RegisterNetEvent('rsgchickencoop:eggs')
 AddEventHandler('rsgchickencoop:eggs', function()
     local playerPed = PlayerPedId()
+    RSGCore.Functions.Progressbar('Bush-Picking', 'Collecting eggs...', 27000, false, true, {
+        disableMovement = true,
+        disableCarMovement = false,
+        disableMouse = false,
+        disableCombat = true,
+    }, {}, {}, {}, function() -- Done 
+    end)
     TaskStartScenarioInPlace(playerPed, GetHashKey('WORLD_HUMAN_CROUCH_INSPECT'), 27000, true, false, false, false)
-    exports['progressBars']:startUI(27000, "Gathering...")
+
     Citizen.Wait(27000)
     ClearPedTasksImmediately(PlayerPedId())
 end)
